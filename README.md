@@ -23,7 +23,11 @@ This project is designed to capture information about researchers who have recei
 ### Demo
 Video starts playing in 7seconds
 
-https://github.com/LungileMagubane/Grant_Management_System/assets/125518243/97b281aa-dd60-43e9-ae0f-ac6ed55b06e1
+
+
+https://github.com/LungileMagubane/Grant_Management_System/assets/125518243/acfb6814-ddca-4adf-bcb8-c75ecd755413
+
+
 
 
 
