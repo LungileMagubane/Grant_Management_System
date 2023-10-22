@@ -31,10 +31,7 @@
                 <label asp-for="StatusOfGrantID" class="control-label"></label>
                 <select id="statusOfGrant" asp-for="StatusOfGrantID" class="form-control" asp-items="ViewBag.StatusOfGrantID">
                     <option>--Select Status of grant--</option>
-                </select> <a id="dropdownGroup" style="display: none;" class="btn btn-primary" asp-area="" asp-controller="StatusOfGrants" asp-action="Index">Add New</a>
-                <div id="statusOfGrantValidationError" class="text-danger" style="display: none;">
-                    Please select  status of grant.
-                </div>
+                </select> <a id="dropdownGroup" style="display: none;" class="btn btn-primary" asp-area="" asp-controller="StatusOfGrants" asp-action="Index">Add New</a>   
             </div>
             <div class="form-group">
                 <label asp-for="YearOfApplication" class="control-label"></label>
@@ -46,9 +43,6 @@
                 <select id="fundingProgramme" asp-for="FundingProgrammeID" class="form-control searchable-dropdown" asp-items="ViewBag.FundingProgrammeID">
                     <option>--Select Funding programme--</option>
                 </select> <a id="dropdownGroup1" style="display: none;" class="btn btn-primary" asp-area="" asp-controller="FundingProgrammes" asp-action="Index">Add New</a>
-                <div id="fundingProgrammeValidationError" class="text-danger" style="display: none;">
-        Please select  funding programme.
-    </div>
             </div>
             <div class="form-group">
                 <label asp-for="ResearchKeywords" class="control-label"></label>
@@ -60,9 +54,6 @@
                 <select id="duration" asp-for="DurationID" class ="form-control" asp-items="ViewBag.DurationID">
                     <option>--Select Duration--</option>
                 </select> <a id="dropdownGroup2" style="display: none;" class="btn btn-primary" asp-area="" asp-controller="Durations" asp-action="Index">Add New</a>
-                <div id="durationValidationError" class="text-danger" style="display: none;">
-                    Please select  duration.
-                </div>
             </div>
             <div class="form-group">
                 <label asp-for="GrantYearStart" class="control-label"></label>
@@ -119,9 +110,6 @@
                 <select id="title" asp-for="TitleID" class ="form-control" asp-items="ViewBag.TitleID">
                     <option>--Select Title--</option>
                 </select>   <a id="dropdownGroup3" style="display: none;" class="btn btn-primary" asp-area="" asp-controller="Titles" asp-action="Index">Add New</a>
-                <div id="titleValidationError" class="text-danger" style="display: none;">
-                    Please select  title.
-                </div>
             </div>
             <div class="form-group">
                 <label asp-for="Initials" class="control-label"></label>
@@ -143,18 +131,12 @@
                 <select id="gender" asp-for="GenderID" class ="form-control" asp-items="ViewBag.GenderID">
                     <option>--Select Gender--</option>
                 </select><a id="dropdownGroup4" style="display: none;" class="btn btn-primary" asp-area="" asp-controller="Genders" asp-action="Index">Add New</a>
-               <div id="genderValidationError" class="text-danger" style="display: none;">
-                    Please select  gender.
-                </div>
             </div>
             <div class="form-group">
                 <label asp-for="RaceID" class="control-label"></label>
                 <select id="race" asp-for="RaceID" class ="form-control" asp-items="ViewBag.RaceID">
                     <option>--Select Race--</option>
                 </select><a id="dropdownGroup5" style="display: none;" class="btn btn-primary" asp-area="" asp-controller="Races" asp-action="Index">Add New</a>
-                <div id="raceValidationError" class="text-danger" style="display: none;">
-                    Please select  race.
-                </div>
             </div>
             <div class="form-group">
                 <label asp-for="EmailAddress" class="control-label"></label>
@@ -166,19 +148,12 @@
                 <select id="faculty" asp-for="FacultyID" class ="form-control" asp-items="ViewBag.FacultyID">
                     <option>--Select Faculty--</option>
                 </select> <a id="dropdownGroup6" style="display: none;" class="btn btn-primary" asp-area="" asp-controller="Faculties" asp-action="Index">Add New</a>
-                <div id="facultyValidationError" class="text-danger" style="display: none;">
-                    Please select  faculty.
-                </div>
             </div>
             <div class="form-group">
                 <label asp-for="DepartmentID" class="control-label"></label>
                 <select id="department" asp-for="DepartmentID" class="form-control searchable-dropdown" asp-items="ViewBag.DepartmentID">
                    <option>--Select Department--</option>
                 </select>  <a id="dropdownGroup7" style="display: none;" class="btn btn-primary" asp-area="" asp-controller="Departments" asp-action="Index">Add New</a>
-                <span asp-validation-for="DepartmentID" class="text-danger"></span>
-                <div id="departmentValidationError" class="text-danger" style="display: none;">
-                    Please select  department.
-                </div>
             </div>
             <div class="form-group">
                 <label asp-for="Nationality" class="control-label"></label>
@@ -249,7 +224,7 @@
                 }
 
                 // Check if grant year start is less than grant year end
-                if (grantYearStart >= grantYearEnd) {
+                if (grantYearStart >= grantYearEnd && yearOfApplication >= grantYearStart) {
                     isValid = false;
                     $("#grantYearValidationErrorEnd").show();
                 } else {
@@ -262,7 +237,6 @@
             $("#grantForm").submit(function (event) {
                 var isValid = true;
                 isValid = isValid && validateTotalGrantValue();
-                isValid = isValid && validateDropdowns();
                 isValid = isValid && validateGrantYear();
 
 console.log(isValid);
