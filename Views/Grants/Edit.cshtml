@@ -1,0 +1,174 @@
+﻿@model Grant_Management_System.Models.Grant
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+<h1>Edit</h1>
+
+<h4>Grant</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NameOfGrant" class="control-label"></label>
+                <input asp-for="NameOfGrant" class="form-control" />
+                <span asp-validation-for="NameOfGrant" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NameOfFunder" class="control-label"></label>
+                <input asp-for="NameOfFunder" class="form-control" />
+                <span asp-validation-for="NameOfFunder" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StatusOfGrantID" class="control-label"></label>
+                <select asp-for="StatusOfGrantID" class="form-control" asp-items="ViewBag.StatusOfGrantID">
+                </select>
+                <span asp-validation-for="StatusOfGrantID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="YearOfApplication" class="control-label"></label>
+                <input type="text" placeholder="YYYY" asp-for="YearOfApplication" class="form-control" />
+                <span asp-validation-for="YearOfApplication" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FundingProgrammeID" class="control-label"></label>
+                <select asp-for="FundingProgrammeID" class="form-control searchable-dropdown" asp-items="ViewBag.FundingProgrammeID">
+                </select>
+                <span asp-validation-for="FundingProgrammeID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ResearchKeywords" class="control-label"></label>
+                <input asp-for="ResearchKeywords" class="form-control" />
+                <span asp-validation-for="ResearchKeywords" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DurationID" class="control-label"></label>
+                <select asp-for="DurationID" class="form-control" asp-items="ViewBag.DurationID"></select>
+                <span asp-validation-for="DurationID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GrantYearStart" class="control-label"></label>
+                <input type="text" placeholder="YYYY" asp-for="GrantYearStart" class="form-control" />
+                <span asp-validation-for="GrantYearStart" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GrantYearEnd" class="control-label"></label>
+                <input type="text" placeholder="YYYY" asp-for="GrantYearEnd" class="form-control" />
+                <span asp-validation-for="GrantYearEnd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalGrantValue" class="control-label"></label>
+                <input type="number" asp-for="TotalGrantValue" class="form-control" />
+                <span asp-validation-for="TotalGrantValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AmountInYear1" class="control-label"></label>
+                <input type="number" asp-for="AmountInYear1" class="form-control" />
+                <span asp-validation-for="AmountInYear1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AmountInYear2" class="control-label"></label>
+                <input type="number" asp-for="AmountInYear2" class="form-control" />
+                <span asp-validation-for="AmountInYear2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AmountInYear3" class="control-label"></label>
+                <input type="number" asp-for="AmountInYear3" class="form-control" />
+                <span asp-validation-for="AmountInYear3" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AmountInYear4" class="control-label"></label>
+                <input type="number" asp-for="AmountInYear4" class="form-control" />
+                <span asp-validation-for="AmountInYear4" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AmountInYear5" class="control-label"></label>
+                <input type="number" asp-for="AmountInYear5" class="form-control" />
+                <span asp-validation-for="AmountInYear5" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StaffNumber" class="control-label"></label>
+                <input asp-for="StaffNumber" class="form-control" />
+                <span asp-validation-for="StaffNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TitleID" class="control-label"></label>
+                <select asp-for="TitleID" class="form-control" asp-items="ViewBag.TitleID"></select>
+                <span asp-validation-for="TitleID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Initials" class="control-label"></label>
+                <input asp-for="Initials" class="form-control" />
+                <span asp-validation-for="Initials" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FirstNames" class="control-label"></label>
+                <input asp-for="FirstNames" class="form-control" />
+                <span asp-validation-for="FirstNames" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GenderID" class="control-label"></label>
+                <select asp-for="GenderID" class="form-control" asp-items="ViewBag.GenderID"></select>
+                <span asp-validation-for="GenderID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RaceID" class="control-label"></label>
+                <select asp-for="RaceID" class="form-control" asp-items="ViewBag.RaceID"></select>
+                <span asp-validation-for="RaceID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmailAddress" class="control-label"></label>
+                <input asp-for="EmailAddress" class="form-control" />
+                <span asp-validation-for="EmailAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FacultyID" class="control-label"></label>
+                <select asp-for="FacultyID" class="form-control" asp-items="ViewBag.FacultyID"></select>
+                <span asp-validation-for="FacultyID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DepartmentID" class="control-label"></label>
+                <select asp-for="DepartmentID" class="form-control searchable-dropdown" asp-items="ViewBag.DepartmentID"></select>
+                <span asp-validation-for="DepartmentID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nationality" class="control-label"></label>
+                <input asp-for="Nationality" class="form-control" />
+                <span asp-validation-for="Nationality" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="RowVersion" />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Initialize Select2 for the searchable dropdown
+            $(".searchable-dropdown").select2({
+                allowClear: true, // Option to clear selection
+                width: '100%', // Set the width to 100%
+            });
+        });
+        </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+}

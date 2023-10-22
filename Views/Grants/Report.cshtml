@@ -1,0 +1,417 @@
+﻿@{
+    ViewData["Title"] = "Report";
+}
+
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+<a class="btn btn-dark" asp-controller="Grants" asp-action="Index">Back </a><br />
+<h1>Report</h1>
+<label>Chart type</label>
+<select id="ChartType">
+    <option value="bar"> Bar chart</option>
+    <option value="pie"> Pie chart</option>
+    <option value="line">Line chart</option>
+    <option value="doughnut"> Doughnut chart</option>
+    <option value="Table">Pivot Table</option>
+
+</select>
+<input id="ID" value="Show Graph" type="button" />
+
+<label>X-axis</label>
+<select id="Xaxis">
+    <option value="Department">Department</option>
+    <option value="Gender">Gender</option>
+    <option value="Faculty">Faculty</option>
+    <option value="FundingProgramme">Funding Programme</option>
+    <option value="Race">Race</option>
+</select>
+
+<label>Y-axis</label>
+<select id="Yaxis">
+
+    <option value="Total Grant Value">Total grant value</option>
+    <option value="Amount In Year 1">Amount in year 1</option>
+    <option value="Amount In Year 2">Amount in year 2</option>
+    <option value="Amount In Year 3">Amount in year 3</option>
+    <option value="Amount In Year 4">Amount in year 4</option>
+    <option value="Amount In Year 5">Amount in year 5</option>
+</select>
+
+<button id="colorButton">Select Color</button>
+<input type="button" value="Print" onclick="window.print()" />
+<div id="colorPicker" title="Choose a Color">
+    <input type="text" id="colorSelector">
+</div>
+
+<div class="chart-container">
+<div  class="chartBox" id="chartContainer" style="width: 800px; height: 300px;">
+    <canvas id="myChart"></canvas>
+  
+</div>
+</div>
+
+
+<script>
+    var chartCount = 0;
+    var chartIds = []; // Array to store chart IDs
+  
+
+    var xAxis;
+    var yAxis ;
+    var chartTitle ;
+
+    function createChart(chartId) {
+        
+
+        var selectedXOption = $("#Xaxis").val();
+        var selectedYOption = $("#Yaxis").val();
+        var selectedChartType = $("#ChartType").val();
+
+        // Determine the AJAX URL based on the selected option
+        var ajaxUrl;
+        var xLabeling;
+        var yLabeling;
+        var chartTitle;
+        if (selectedXOption === "Department" && selectedYOption === "Total Grant Value") {
+            ajaxUrl = "/Grants/GetDepartmentbyTV";
+        } else if (selectedXOption === "Department" && selectedYOption === "Amount In Year 1") {
+            ajaxUrl = "/Grants/GetDepartmentbyAm1";
+        } else if (selectedXOption === "Department" && selectedYOption === "Amount In Year 2") {
+            ajaxUrl = "/Grants/GetDepartmentbyAm2";
+        } else if (selectedXOption === "Department" && selectedYOption === "Amount In Year 3") {
+            ajaxUrl = "/Grants/GetDepartmentbyAm3";
+        } else if (selectedXOption === "Department" && selectedYOption === "Amount In Year 4") {
+            ajaxUrl = "/Grants/GetDepartmentbyAm4";
+        } else if (selectedXOption === "Department" && selectedYOption === "Amount In Year 5") {
+            ajaxUrl = "/Grants/GetDepartmentbyAm5";
+
+        } else if (selectedXOption === "Gender" && selectedYOption === "Total Grant Value") {
+            ajaxUrl = "/Grants/GetGenderbyTV";
+        } else if (selectedXOption === "Gender" && selectedYOption === "Amount In Year 1") {
+            ajaxUrl = "/Grants/GetGenderbyAm1";
+        } else if (selectedXOption === "Gender" && selectedYOption === "Amount In Year 2") {
+            ajaxUrl = "/Grants/GetGenderbyAm2";
+        } else if (selectedXOption === "Gender" && selectedYOption === "Amount In Year 3") {
+            ajaxUrl = "/Grants/GetGenderbyAm3";
+        } else if (selectedXOption === "Gender" && selectedYOption === "Amount In Year 4") {
+            ajaxUrl = "/Grants/GetGenderbyAm4";
+        } else if (selectedXOption === "Gender" && selectedYOption === "Amount In Year 5") {
+            ajaxUrl = "/Grants/GetGenderbyAm5";
+
+        }
+        else if (selectedXOption === "Faculty" && selectedYOption === "Total Grant Value") {
+            ajaxUrl = "/Grants/GetFacultybyTV";
+        } else if (selectedXOption === "Faculty" && selectedYOption === "Amount In Year 1") {
+            ajaxUrl = "/Grants/GetFacultybyAm1";
+        } else if (selectedXOption === "Faculty" && selectedYOption === "Amount In Year 2") {
+            ajaxUrl = "/Grants/GetFacultybyAm2";
+        } else if (selectedXOption === "Faculty" && selectedYOption === "Amount In Year 3") {
+            ajaxUrl = "/Grants/GetFacultybyAm3";
+        } else if (selectedXOption === "Faculty" && selectedYOption === "Amount In Year 4") {
+            ajaxUrl = "/Grants/GetFacultybyAm4";
+        } else if (selectedXOption === "Faculty" && selectedYOption === "Amount In Year 5") {
+            ajaxUrl = "/Grants/GetFacultybyAm5";
+        }
+
+        else if (selectedXOption === "Race" && selectedYOption === "Total Grant Value") {
+            ajaxUrl = "/Grants/GetRacebyTV";
+        } else if (selectedXOption === "Race" && selectedYOption === "Amount In Year 1") {
+            ajaxUrl = "/Grants/GetRacebyAm1";
+        } else if (selectedXOption === "Race" && selectedYOption === "Amount In Year 2") {
+        ajaxUrl = "/Grants/GetRacebyAm2";
+        } else if (selectedXOption === "Race" && selectedYOption === "Amount In Year 3") {
+            ajaxUrl = "/Grants/GetRacebyAm3";
+        } else if (selectedXOption === "Race" && selectedYOption === "Amount In Year 4") {
+            ajaxUrl = "/Grants/GetRacebyAm4";
+        } else if (selectedXOption === "Race" && selectedYOption === "Amount In Year 5") {
+            ajaxUrl = "/Grants/GetRacebyAm5";
+
+        }else if (selectedXOption === "FundingProgramme" && selectedYOption === "Total Grant Value") {
+                    ajaxUrl = "/Grants/GetFundsbyTV";
+        } else if (selectedXOption === "FundingProgramme" && selectedYOption === "Amount In Year 1") {
+                    ajaxUrl = "/Grants/GetFundsbyAm1";
+        } else if (selectedXOption === "FundingProgramme" && selectedYOption === "Amount In Year 2") {
+                    ajaxUrl = "/Grants/GetFundsbyAm2";
+        } else if (selectedXOption === "FundingProgramme" && selectedYOption === "Amount In Year 3") {
+                    ajaxUrl = "/Grants/GetFundsbyAm3";
+        } else if (selectedXOption === "FundingProgramme" && selectedYOption === "Amount In Year 4") {
+                    ajaxUrl = "/Grants/GetFundsbyAm4";
+        } else if (selectedXOption === "FundingProgramme" && selectedYOption === "Amount In Year 5") {
+                    ajaxUrl = "/Grants/GetFundsbyAm5";
+        
+    }
+       
+
+        // Prepare the data to be sent to the server
+        var requestData = {
+            xOption: selectedXOption,
+            yOption: selectedYOption,
+            chartType: selectedChartType
+        };
+
+        $.ajax({
+            type: "GET",
+            url: ajaxUrl, // Use the determined URL
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: requestData,
+            success: function (data) {
+                var _data = data;
+                var _chartlabels = _data[0];
+                var _chartData = _data[1];
+                var barcolor = ["red", "green", "blue", "purple", "yellow", "orange", "pink", "brown", "cyan", "magenta",
+                    "teal", "lime", "indigo", "violet", "olive", "navy", "maroon", "fuchsia", "aqua", "gray",
+                    "gold", "silver", "crimson", "darkslategray", "deeppink", "coral", "forestgreen", "dodgerblue",
+                    "orchid", "slateblue", "tomato", "sienna", "cadetblue", "royalblue", "slategray", "powderblue",
+                    "aliceblue", "antiquewhite", "aquamarine", "azure", "beige", "bisque", "blanchedalmond", "burlywood", "cadetblue", "chartreuse",
+                    "chocolate", "coral", "cornflowerblue", "cornsilk", "crimson", "darkblue", "darkcyan", "darkgoldenrod", "darkgray", "darkgreen",
+                    "darkkhaki", "darkmagenta", "darkolivegreen", "darkorange", "darkorchid", "darkred", "darksalmon", "darkseagreen", "darkslateblue", "darkslategray",
+                    "darkturquoise", "darkviolet", "deeppink", "deepskyblue", "dimgray", "dodgerblue", "firebrick", "floralwhite", "forestgreen", "fuchsia",
+                    "gainsboro", "ghostwhite", "gold", "goldenrod", "gray", "green", "greenyellow", "honeydew", "hotpink", "indianred",
+                    "indigo", "ivory", "khaki", "lavender", "lavenderblush", "lawngreen", "lemonchiffon", "lightblue", "lightcoral", "lightcyan",
+                    "lightgoldenrodyellow", "lightgray", "lightgreen", "lightpink", "lightsalmon", "lightseagreen", "lightskyblue", "lightslategray", "lightsteelblue", "lightyellow",
+                    "lime", "limegreen", "linen", "magenta", "maroon", "mediumaquamarine", "mediumblue", "mediumorchid", "mediumpurple", "mediumseagreen",
+                    "mediumslateblue", "mediumspringgreen", "mediumturquoise", "mediumvioletred", "midnightblue", "mintcream", "mistyrose", "moccasin", "navajowhite", "navy",
+                    "oldlace", "olive", "olivedrab", "orange", "orangered", "orchid", "palegoldenrod", "palegreen", "paleturquoise", "palevioletred",
+                    "papayawhip", "peachpuff", "peru", "pink", "plum", "powderblue", "purple", "red", "rosybrown", "royalblue",
+                    "saddlebrown", "salmon", "sandybrown", "seagreen", "seashell", "sienna", "silver", "skyblue", "slateblue", "slategray",
+                    "snow", "springgreen", "steelblue", "tan", "teal", "thistle", "tomato", "turquoise", "violet", "wheat",
+                    "white", "whitesmoke", "yellow", "yellowgreen"];
+                var chartType = $("#ChartType").val();
+                var xAxis = $("#Xaxis").val();
+                var yAxis = $("#Yaxis").val();
+                var chartTitle = yAxis + " per " + xAxis;
+
+               
+                // Determine the chart type based on the selected option
+                var chartConfig = {
+                    type: chartType,
+                    data: {
+                        labels: _chartlabels,
+                        datasets: [{
+                            backgroundColor: barcolor ,
+                            data: _chartData
+                           
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: chartTitle
+                            }
+                        },
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: xAxis
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: yAxis
+                                }
+                            }
+                        }
+                    }
+                };
+                if (selectedChartType === "Table") {
+                    createPivotTable({
+                        labels: _chartlabels,
+                        datasets: [
+                            {
+                                data: _chartData,
+                                borderColor: barcolor
+                            }
+                        ]
+                    }, xAxis, yAxis);
+                }
+               
+
+                // Create a new Chart object using the canvas element and chartConfig
+                var canvasElement = document.getElementById(chartId);
+                var myChart = new Chart(canvasElement, chartConfig);
+                // Store the chart ID for future reference
+                chartIds.push(chartId);
+            },
+            error: function (err) {
+                // Handle error
+            }
+        });
+
+
+    }
+
+
+ 
+    function createPivotTable(data, xAxis, yAxis) {
+        // Create a container for the table and delete button
+        var tableContainer = document.createElement("div");
+        tableContainer.className = "table-container"; // Add a class for styling
+        document.body.appendChild(tableContainer); // Append it to the document body
+
+        // Create the table element
+        var tableElement = document.createElement("table");
+
+        // Create the table header
+        var tableHeaderRow = document.createElement("tr");
+
+        // Add the X-axis and Y-axis headers
+        var xAxisHeader = document.createElement("th");
+        xAxisHeader.textContent = xAxis;
+        tableHeaderRow.appendChild(xAxisHeader);
+
+        var yAxisHeader = document.createElement("th");
+        yAxisHeader.textContent = yAxis;
+        tableHeaderRow.appendChild(yAxisHeader);
+
+        tableElement.appendChild(tableHeaderRow);
+
+        // Create table rows based on the data
+        for (var i = 0; i < data.labels.length; i++) {
+            var rowData = data.labels[i];
+            var tableRow = document.createElement("tr");
+
+            // Add X-axis and Y-axis values for each row
+            var xAxisValue = document.createElement("td");
+            xAxisValue.textContent = rowData;
+            tableRow.appendChild(xAxisValue);
+
+            var yAxisValue = document.createElement("td");
+            yAxisValue.textContent = data.datasets[0].data[i];
+            tableRow.appendChild(yAxisValue);
+
+            tableElement.appendChild(tableRow);
+        }
+
+        tableContainer.appendChild(tableElement);
+
+        // Create the delete button
+        var deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.className = "delete-button"; // Add a class for styling
+        tableContainer.appendChild(deleteButton);
+
+
+        //Make the table resizable and draggable
+        $(tableContainer).resizable({
+            handles: "se", 
+            minWidth: 200,
+            minHeight: 200,
+        }).draggable(); 
+
+        // Add an event listener to delete the table and button when the delete button is clicked
+        $(deleteButton).on("click", function () {
+            $(tableContainer).remove(); 
+            $(deleteButton).hide();
+        });
+    }
+
+
+
+
+
+  
+    function deleteChart(chartId) {
+        // Remove the canvas element from the DOM
+        $("#" + chartId).remove();
+
+        // Remove the chart ID from the array
+        var index = chartIds.indexOf(chartId);
+        if (index !== -1) {
+            chartIds.splice(index, 1);
+        }
+    }
+
+    $(function () {
+        $("#ID").click(function () {
+            var chartId = "myChart" + chartCount; // Unique ID for each chart
+            var chartContainer = $("<div class='chart-container'></div>");
+            var chartBox = $("<div class='chartBox'></div>");
+            var chartCanvas = $("<canvas id='" + chartId + "'></canvas>");
+            
+
+            var deleteButton = $("<button class='delete-button'>Delete Chart</button>");
+            deleteButton.data("chart-id", chartId);
+
+            chartBox.append(chartCanvas);
+            chartContainer.append(chartBox, deleteButton);
+            $("#chartContainer").append(chartContainer);
+
+            createChart(chartId);
+            chartCount++;
+
+            // Make the chart and delete button resizable and draggable
+            chartContainer.resizable({
+                handles: "se", 
+                minWidth: 20, 
+                minHeight: 20, 
+            }).draggable(); 
+
+        });
+
+        // Create a dialog for color selection
+        $("#colorPicker").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                "OK": function () {
+                    var selectedColor = $("#colorSelector").val();
+                    var chartId = "myChart" + (chartCount - 1); 
+                    updateChartColor(chartId, selectedColor);
+                    $(this).dialog("close");
+                },
+                "Cancel": function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+        // Open the color selection dialog when the color button is clicked
+        $("#colorButton").click(function () {
+            $("#colorPicker").dialog("open");
+        });
+
+
+        function updateChartColor(chartId, color) {
+        var chart = Chart.getChart(chartId);
+        if (chart) {
+            chart.data.datasets.forEach(function (dataset) {
+                dataset.backgroundColor = color;
+            });
+            chart.update();
+        }
+    }
+
+        // Add a delete button for each chart
+        $(document).on("click", ".delete-button", function () {
+            var chartIdToDelete = $(this).data("chart-id");
+            deleteChart(chartIdToDelete);
+            $(this).hide();
+        });
+
+    });
+</script>
+<style>
+    .chartjs-table,th,td{
+        border-collapse:collapse;
+        border:1px solid black;
+        padding:10px;
+    }
+
+    .chartjs-thead{
+        font-weight : bold;
+    }
+
+    .chartjs-body{
+        text-align:center;
+    }
+</style>

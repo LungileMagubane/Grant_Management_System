@@ -1,0 +1,281 @@
+﻿@model Grant_Management_System.Models.Grant
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
+<h1>Create</h1>
+
+<h4>Grant</h4>
+<a class="btn btn-danger" style="color:white" id="showDropdownButton">Show Dropdown buttons</a>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" method="post" id="grantForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NameOfGrant" class="control-label"></label>
+                <input asp-for="NameOfGrant" class="form-control" />
+                <span asp-validation-for="NameOfGrant" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NameOfFunder" class="control-label"></label>
+                <input asp-for="NameOfFunder" class="form-control" />
+                <span asp-validation-for="NameOfFunder" class="text-danger"></span>
+            </div>
+            <div class="form-group" >
+                <label asp-for="StatusOfGrantID" class="control-label"></label>
+                <select id="statusOfGrant" asp-for="StatusOfGrantID" class="form-control" asp-items="ViewBag.StatusOfGrantID">
+                    <option>--Select Status of grant--</option>
+                </select> <a id="dropdownGroup" style="display: none;" class="btn btn-primary" asp-area="" asp-controller="StatusOfGrants" asp-action="Index">Add New</a>
+                <div id="statusOfGrantValidationError" class="text-danger" style="display: none;">
+                    Please select  status of grant.
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="YearOfApplication" class="control-label"></label>
+                <input type="text" placeholder="YYYY" asp-for="YearOfApplication" class="form-control" />
+                <span asp-validation-for="YearOfApplication" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FundingProgrammeID" class="control-label"></label>
+                <select id="fundingProgramme" asp-for="FundingProgrammeID" class="form-control searchable-dropdown" asp-items="ViewBag.FundingProgrammeID">
+                    <option>--Select Funding programme--</option>
+                </select> <a id="dropdownGroup1" style="display: none;" class="btn btn-primary" asp-area="" asp-controller="FundingProgrammes" asp-action="Index">Add New</a>
+                <div id="fundingProgrammeValidationError" class="text-danger" style="display: none;">
+        Please select  funding programme.
+    </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="ResearchKeywords" class="control-label"></label>
+                <input asp-for="ResearchKeywords" class="form-control" />
+                <span asp-validation-for="ResearchKeywords" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DurationID" class="control-label"></label>
+                <select id="duration" asp-for="DurationID" class ="form-control" asp-items="ViewBag.DurationID">
+                    <option>--Select Duration--</option>
+                </select> <a id="dropdownGroup2" style="display: none;" class="btn btn-primary" asp-area="" asp-controller="Durations" asp-action="Index">Add New</a>
+                <div id="durationValidationError" class="text-danger" style="display: none;">
+                    Please select  duration.
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="GrantYearStart" class="control-label"></label>
+                <input type="text" placeholder="YYYY" asp-for="GrantYearStart" class="form-control" />
+                <span asp-validation-for="GrantYearStart" class="text-danger"></span>
+                <div id="grantYearValidationErrorStart" class="text-danger" style="display: none;">Grant year start cannot be less than year of application </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="GrantYearEnd" class="control-label"></label>
+                <input type="text" placeholder="YYYY" asp-for="GrantYearEnd" class="form-control" />
+                <span asp-validation-for="GrantYearEnd" class="text-danger"></span>
+                <div id="grantYearValidationErrorEnd" class="text-danger" style="display: none;">Grant year end cannot be less than grant year start </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalGrantValue" class="control-label"></label>
+                <input asp-for="TotalGrantValue" class="form-control" />
+                <span asp-validation-for="TotalGrantValue" class="text-danger"></span>
+                <div id="totalGrantValueValidationError" class="text-danger" style="display: none;">
+                    Total grant value cannot be less than the sum of amounts.
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="AmountInYear1" class="control-label"></label>
+                <input asp-for="AmountInYear1" class="form-control" />
+                <span asp-validation-for="AmountInYear1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AmountInYear2" class="control-label"></label>
+                <input asp-for="AmountInYear2" class="form-control" />
+                <span asp-validation-for="AmountInYear2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AmountInYear3" class="control-label"></label>
+                <input asp-for="AmountInYear3" class="form-control" />
+                <span asp-validation-for="AmountInYear3" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AmountInYear4" class="control-label"></label>
+                <input asp-for="AmountInYear4" class="form-control" />
+                <span asp-validation-for="AmountInYear4" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AmountInYear5" class="control-label"></label>
+                <input asp-for="AmountInYear5" class="form-control" />
+                <span asp-validation-for="AmountInYear5" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StaffNumber" class="control-label"></label>
+                <input asp-for="StaffNumber" class="form-control" />
+                <span asp-validation-for="StaffNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TitleID" class="control-label"></label>
+                <select id="title" asp-for="TitleID" class ="form-control" asp-items="ViewBag.TitleID">
+                    <option>--Select Title--</option>
+                </select>   <a id="dropdownGroup3" style="display: none;" class="btn btn-primary" asp-area="" asp-controller="Titles" asp-action="Index">Add New</a>
+                <div id="titleValidationError" class="text-danger" style="display: none;">
+                    Please select  title.
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Initials" class="control-label"></label>
+                <input asp-for="Initials" class="form-control" />
+                <span asp-validation-for="Initials" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FirstNames" class="control-label"></label>
+                <input asp-for="FirstNames" class="form-control" />
+                <span asp-validation-for="FirstNames" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GenderID" class="control-label"></label>
+                <select id="gender" asp-for="GenderID" class ="form-control" asp-items="ViewBag.GenderID">
+                    <option>--Select Gender--</option>
+                </select><a id="dropdownGroup4" style="display: none;" class="btn btn-primary" asp-area="" asp-controller="Genders" asp-action="Index">Add New</a>
+               <div id="genderValidationError" class="text-danger" style="display: none;">
+                    Please select  gender.
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="RaceID" class="control-label"></label>
+                <select id="race" asp-for="RaceID" class ="form-control" asp-items="ViewBag.RaceID">
+                    <option>--Select Race--</option>
+                </select><a id="dropdownGroup5" style="display: none;" class="btn btn-primary" asp-area="" asp-controller="Races" asp-action="Index">Add New</a>
+                <div id="raceValidationError" class="text-danger" style="display: none;">
+                    Please select  race.
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmailAddress" class="control-label"></label>
+                <input asp-for="EmailAddress" class="form-control" />
+                <span asp-validation-for="EmailAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FacultyID" class="control-label"></label>
+                <select id="faculty" asp-for="FacultyID" class ="form-control" asp-items="ViewBag.FacultyID">
+                    <option>--Select Faculty--</option>
+                </select> <a id="dropdownGroup6" style="display: none;" class="btn btn-primary" asp-area="" asp-controller="Faculties" asp-action="Index">Add New</a>
+                <div id="facultyValidationError" class="text-danger" style="display: none;">
+                    Please select  faculty.
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="DepartmentID" class="control-label"></label>
+                <select id="department" asp-for="DepartmentID" class="form-control searchable-dropdown" asp-items="ViewBag.DepartmentID">
+                   <option>--Select Department--</option>
+                </select>  <a id="dropdownGroup7" style="display: none;" class="btn btn-primary" asp-area="" asp-controller="Departments" asp-action="Index">Add New</a>
+                <span asp-validation-for="DepartmentID" class="text-danger"></span>
+                <div id="departmentValidationError" class="text-danger" style="display: none;">
+                    Please select  department.
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nationality" class="control-label"></label>
+                <input asp-for="Nationality" class="form-control" />
+                <span asp-validation-for="Nationality" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // jQuery to toggle the visibility of the dropdown group
+            $("#showDropdownButton").click(function () {
+                $("#dropdownGroup, #dropdownGroup1, #dropdownGroup2, #dropdownGroup3, #dropdownGroup4, #dropdownGroup5, #dropdownGroup6, #dropdownGroup7").toggle();
+            });
+
+            // Initialize Select2 for the searchable dropdown
+            $(".searchable-dropdown").select2({
+                placeholder: "--Select Department--",
+                allowClear: true, // Option to clear selection
+                width: '100%', // Set the width to 100%
+            });
+
+            // Function to validate TotalGrantValue
+            function validateTotalGrantValue() {
+                var totalGrantValue = parseFloat($("#TotalGrantValue").val());
+                var amount1 = parseFloat($("#AmountInYear1").val()) || 0;
+                var amount2 = parseFloat($("#AmountInYear2").val()) || 0;
+                var amount3 = parseFloat($("#AmountInYear3").val()) || 0;
+                var amount4 = parseFloat($("#AmountInYear4").val()) || 0;
+                var amount5 = parseFloat($("#AmountInYear5").val()) || 0;
+
+                var totalAmount = amount1 + amount2 + amount3 + amount4 + amount5;
+
+                if (totalGrantValue < totalAmount) {
+                    $("#totalGrantValueValidationError").show();
+                    return false;
+                } else {
+                    $("#totalGrantValueValidationError").hide();
+                }
+                return true;
+            }
+
+          
+          
+            function validateGrantYear() {
+                var isValid = true;
+                var yearOfApplication = parseInt($("#YearOfApplication").val());
+                var grantYearStart = parseInt($("#GrantYearStart").val());
+                var grantYearEnd = parseInt($("#GrantYearEnd").val());
+
+                // Check if year of application is less than grant year start
+                if (yearOfApplication >= grantYearStart) {
+                    isValid = false;
+                    $("#grantYearValidationErrorStart").show();
+                } else {
+                    $("#grantYearValidationErrorStart").hide();
+                }
+
+                // Check if grant year start is less than grant year end
+                if (grantYearStart >= grantYearEnd) {
+                    isValid = false;
+                    $("#grantYearValidationErrorEnd").show();
+                } else {
+                    $("#grantYearValidationErrorEnd").hide();
+                }
+
+                return isValid;
+            }
+
+            $("#grantForm").submit(function (event) {
+                var isValid = true;
+                isValid = isValid && validateTotalGrantValue();
+                isValid = isValid && validateDropdowns();
+                isValid = isValid && validateGrantYear();
+
+console.log(isValid);
+
+                return isValid;
+
+                if (!isValid) {
+                    event.preventDefault(); // Prevent form submission if validation fails
+                }
+              
+            });
+        });
+    </script>
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

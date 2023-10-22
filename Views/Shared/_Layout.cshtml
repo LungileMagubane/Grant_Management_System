@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - UCT Grant Management System</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    
+    <link rel="stylesheet" href="~/css/site.css"  />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" /> 
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+
+   <script>
+        var $j = jQuery.noConflict();
+        $j(document).ready(function () {
+            $j('#GrantTable').DataTable();
+        });
+
+        var $j = jQuery.noConflict();
+        $j(document).ready(function () {
+            $j('#DeptTable').DataTable();
+        });
+
+        var $j = jQuery.noConflict();
+        $j(document).ready(function () {
+            $j('#DurTable').DataTable();
+        });
+
+        var $j = jQuery.noConflict();
+        $j(document).ready(function () {
+            $j('#FacTable').DataTable();
+        });
+        
+        var $j = jQuery.noConflict();
+        $j(document).ready(function () {
+            $j('#fundTable').DataTable();
+        });
+        
+        var $j = jQuery.noConflict();
+        $j(document).ready(function () {
+            $j('#GenTable').DataTable();
+        });
+
+        var $j = jQuery.noConflict();
+        $j(document).ready(function () {
+            $j('#raceTable').DataTable();
+        });
+
+        var $j = jQuery.noConflict();
+        $j(document).ready(function () {
+            $j('#titleTable').DataTable();
+        });
+        
+        var $j = jQuery.noConflict();
+        $j(document).ready(function () {
+            $j('#statTable').DataTable();
+        });
+
+        
+</script>
+</head>
+<body>
+   <br /><br /><br />
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+
+ 
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+   
+</body>
+</html>
