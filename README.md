@@ -16,7 +16,8 @@ Frameworks : Asp.net core and Entity framework core
 Database : MS Sql server, EF core for querying data
 Libraries: Chart.js, jQuery UI, 
 Plugins - jQuery datatables, select2.org
-Programming language - C#
+Front-end - HTML,CSS, Javascript
+Backend - C#
 
 
 
