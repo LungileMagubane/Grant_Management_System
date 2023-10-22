@@ -20,5 +20,11 @@ This project is designed to capture information about researchers who have recei
 * Front-end - HTML,CSS, Javascript
 * Backend - C#
 
+###Demo
+
+
+https://github.com/LungileMagubane/Grant_Management_System/assets/125518243/97b281aa-dd60-43e9-ae0f-ac6ed55b06e1
+
+
 
 
